@@ -17,13 +17,13 @@ class Filters extends BaseConfig
      *
      * @var array
      */
-    public $aliases = [
-        'csrf'          => CSRF::class,
-        'toolbar'       => DebugToolbar::class,
-        'honeypot'      => Honeypot::class,
-        'invalidchars'  => InvalidChars::class,
-        'secureheaders' => SecureHeaders::class,
-    ];
+    // public $aliases = [
+    //     'csrf'          => CSRF::class,
+    //     'toolbar'       => DebugToolbar::class,
+    //     'honeypot'      => Honeypot::class,
+    //     'invalidchars'  => InvalidChars::class,
+    //     'secureheaders' => SecureHeaders::class,
+    // ];
 
     /**
      * List of filter aliases that are always
@@ -31,18 +31,18 @@ class Filters extends BaseConfig
      *
      * @var array
      */
-    public $globals = [
-        'before' => [
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
-        ],
-        'after' => [
-            'toolbar',
-            // 'honeypot',
-            // 'secureheaders',
-        ],
-    ];
+    // public $globals = [
+    //     'before' => [
+    //         // 'honeypot',
+    //         // 'csrf',
+    //         // 'invalidchars',
+    //     ],
+    //     'after' => [
+    //         'toolbar',
+    //         // 'honeypot',
+    //         // 'secureheaders',
+    //     ],
+    // ];
 
     /**
      * List of filter aliases that works on a
@@ -65,4 +65,27 @@ class Filters extends BaseConfig
      * @var array
      */
     public $filters = [];
+
+    public $aliases = [
+        'csrf' => \CodeIgniter\Filters\CSRF::class,
+        'toolbar' => \CodeIgniter\Filters\DebugToolbar::class,
+        'honeypot' => \CodeIgniter\Filters\Honeypot::class,
+        'usersAuth' => \App\Filters\UsersAuthFilter::class,
+    ];
+
+    public $globals = [
+        'before' => [
+            'csrf',
+            'usersAuth' => [
+                'except' => [
+                    'login/*',
+                    'logout/*'
+                ]
+            ]
+        ],
+        'after' => [
+            'toolbar',
+            //'honeypot'
+        ],
+    ];
 }
